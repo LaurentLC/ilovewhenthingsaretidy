@@ -1,0 +1,35 @@
+{
+  "manifest_version": 2,
+  "name": "I love when things are tidy",
+  "version": "1.0.0",
+  "description": "Rewrites visible page text by sorting or shuffling letters inside words.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "ilovewhenthingsaretidy@laurentlc",
+      "strict_min_version": "109.0"
+    }
+  },
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
+    "<all_urls>"
+  ],
+  "browser_action": {
+    "default_title": "I love when things are tidy",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "core/transform.js",
+        "core/dom.js",
+        "content-script.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
