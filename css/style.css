@@ -1,0 +1,130 @@
+body {
+  font-family: Arial, sans-serif;
+  max-width: 720px;
+  margin: 40px auto;
+  padding: 0px 20px;
+  background: #f5f5f5;
+  color: #222;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.language-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+
+.language-select {
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 14px;
+  background: #fff;
+  cursor: pointer;
+}
+
+textarea {
+  width: 100%;
+  min-height: 140px;
+  padding: 12px;
+  font-size: 16px;
+  line-height: 1.4;
+  box-sizing: border-box;
+  resize: vertical;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.controls {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.intro-text {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 12px;
+}
+
+.intro-link {
+  color: #0077cc;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.radio-group {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button {
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  padding: 10px;
+  font-size: 18px;
+}
+
+button:hover {
+  background: #eee;
+}
+
+#output {
+  margin-top: 20px;
+  padding: 14px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  min-height: 60px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+#status {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+  min-height: 20px;
+}
+
+.footer-note {
+  margin-top: 24px;
+  text-align: center;
+  color: #777;
+  font-size: 13px;
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I love when things are tidy</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="css/style.css?ver=1.03" />
+</head>
+<body>
+  <div class="language-bar">
+    <select id="languageSelect" class="language-select" aria-label="Choisir la langue">
+      <option value="en">&#x1F1EC;&#x1F1E7; EN</option>
+      <option value="fr" selected>&#x1F1EB;&#x1F1F7; FR</option>
+    </select>
+  </div>
+
+  <p class="intro-text" id="introText">J'aime les mots, les phrases, c'est super, mais quand même, toutes ces lettres dans n'importe quel ordre, là, ça fait pas propre. J'aime quand les choses sont BIEN RANGÉES. D'où ce petit utilitaire, qui va vous remettre tout ça bien d'équerre (ou en équerre inversée, ou, allez, parce que j'aime bien aussi l'imprévu, dans n'importe quel ordre aussi si ça vous chante). Pour un exemple, <a id="introDemoLink" class="intro-link" href="#">cliquez ici</a>.</p>
+
+  <h1 id="title">J'aime quand les choses sont bien rangées</h1>
+
+  <textarea id="input" placeholder="Saisissez ou collez votre texte ici..."></textarea>
+
+  <div class="controls">
+    <div class="radio-group">
+      <label>
+        <input type="radio" name="sortOrder" value="asc" checked />
+        <span id="labelAsc">Ordre alphabétique</span>
+      </label>
+      <label>
+        <input type="radio" name="sortOrder" value="desc" />
+        <span id="labelDesc">Ordre alphabétique inversé</span>
+      </label>
+      <label>
+        <input type="radio" name="sortOrder" value="random" />
+        <span id="labelRandom">Aléatoire</span>
+      </label>
+    </div>
+
+    <button id="sortBtn">RANGE-MOI ÇA !</button>
+    <button id="clearBtn" class="icon-button" aria-label="Effacer le champ">&#129529;</button>
+    <button id="copyBtn">Copier le résultat</button>
+  </div>
+
+  <div id="output"></div>
+  <div id="status"></div>
+  <p class="footer-note">Laurent Le Coustumer - 2026</p>
+
+  <script src="js/app.js?ver=1.05" defer></script>
+</body>
+</html>
