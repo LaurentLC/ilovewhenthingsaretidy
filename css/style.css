@@ -128,3 +128,17 @@ button:hover {
   color: #777;
   font-size: 13px;
 }
+
+.footer-link {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.footer-link:hover {
+  color: #444;
+}
+
+.external-link-icon {
+  font-size: 12px;
+  vertical-align: text-top;
+}
