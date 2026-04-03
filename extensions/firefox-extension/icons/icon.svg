@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="I love when things are tidy icon">
+  <rect width="128" height="128" rx="24" fill="#f5f5f5"/>
+  <rect x="20" y="24" width="88" height="80" rx="14" fill="#ffffff" stroke="#222222" stroke-width="4"/>
+  <path d="M34 48h46" stroke="#222222" stroke-width="6" stroke-linecap="round"/>
+  <path d="M34 64h34" stroke="#222222" stroke-width="6" stroke-linecap="round"/>
+  <path d="M34 80h54" stroke="#222222" stroke-width="6" stroke-linecap="round"/>
+  <path d="M92 42l10 10-10 10" fill="none" stroke="#0077cc" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="92" cy="80" r="6" fill="#0077cc"/>
+</svg>

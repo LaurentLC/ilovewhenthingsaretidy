@@ -32,6 +32,30 @@ h1 {
   line-height: 1.4;
 }
 
+.state-panel {
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border: 1px solid #d7d7d7;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.state-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 0 6px;
+  font-size: 13px;
+}
+
+.state-line:last-child {
+  margin-bottom: 0;
+}
+
+.state-label {
+  color: #666;
+}
+
 .mode-group {
   margin: 0;
   padding: 12px;
@@ -89,4 +113,5 @@ button.secondary {
   margin: 12px 0 0;
   color: #555;
   font-size: 13px;
+  line-height: 1.4;
 }

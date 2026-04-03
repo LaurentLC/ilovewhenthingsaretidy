@@ -5,6 +5,8 @@
     constructor() {
       this.originalTextByNode = new WeakMap();
       this.touchedNodes = new Set();
+      this.currentMode = 'asc';
+      this.isTransformed = false;
     }
 
     apply(mode) {
@@ -31,6 +33,9 @@
         transformedCount += 1;
       });
 
+      this.currentMode = mode;
+      this.isTransformed = transformedCount > 0;
+
       return transformedCount;
     }
 
@@ -46,7 +51,16 @@
         restoredCount += 1;
       });
 
+      this.isTransformed = false;
+
       return restoredCount;
+    }
+
+    getState() {
+      return {
+        currentMode: this.currentMode,
+        isTransformed: this.isTransformed
+      };
     }
 
     collectEligibleTextNodes() {
@@ -102,19 +116,34 @@
         'INPUT',
         'SELECT',
         'OPTION',
+        'BUTTON',
         'CODE',
-        'PRE'
+        'PRE',
+        'SVG',
+        'MATH'
       ]);
 
       if (ignoredTags.has(element.tagName)) {
         return true;
       }
 
-      if (element.closest('script, style, noscript, textarea, input, select, option, code, pre')) {
+      if (element.closest('script, style, noscript, textarea, input, select, option, button, code, pre, svg, math')) {
         return true;
       }
 
       if (element.isContentEditable || element.closest('[contenteditable=""], [contenteditable="true"]')) {
+        return true;
+      }
+
+      if (element.closest('[role="textbox"], [role="searchbox"], [role="combobox"], [role="spinbutton"]')) {
+        return true;
+      }
+
+      if (element.closest('.CodeMirror, .cm-editor, .monaco-editor, .ace_editor, .ql-editor, .ProseMirror')) {
+        return true;
+      }
+
+      if (element.closest('[data-gramm], [data-lexical-editor], [data-slate-editor], [data-testid="editor"]')) {
         return true;
       }
 
