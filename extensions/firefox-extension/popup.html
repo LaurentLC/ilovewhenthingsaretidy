@@ -14,6 +14,10 @@
 
     <div class="state-panel" aria-live="polite">
       <p class="state-line">
+        <span class="state-label">Site</span>
+        <strong id="siteValue">Checking...</strong>
+      </p>
+      <p class="state-line">
         <span class="state-label">Page state</span>
         <strong id="pageStateValue">Checking...</strong>
       </p>
@@ -22,6 +26,11 @@
         <strong id="activeModeValue">A-Z</strong>
       </p>
     </div>
+
+    <label class="auto-apply-toggle">
+      <input id="autoApplyCheckbox" type="checkbox" />
+      <span>Auto-apply on this site</span>
+    </label>
 
     <fieldset class="mode-group">
       <legend>Mode</legend>

@@ -1,6 +1,9 @@
 'use strict';
 
 const tidySession = new TidyDomSession();
+const SITE_MODES_STORAGE_KEY = 'siteModes';
+
+initializeAutoApply().catch(() => {});
 
 browser.runtime.onMessage.addListener(message => {
   if (!message || !message.action) {
@@ -35,3 +38,33 @@ browser.runtime.onMessage.addListener(message => {
 
   return Promise.resolve({ message: 'Unknown action.' });
 });
+
+async function initializeAutoApply() {
+  const hostname = getCurrentHostname();
+
+  if (!hostname || !document.body) {
+    return;
+  }
+
+  const stored = await browser.storage.local.get(SITE_MODES_STORAGE_KEY);
+  const siteModes = stored[SITE_MODES_STORAGE_KEY] || {};
+  const mode = siteModes[hostname];
+
+  if (!mode) {
+    return;
+  }
+
+  tidySession.apply(mode);
+}
+
+function getCurrentHostname() {
+  try {
+    if (!/^https?:$/.test(window.location.protocol)) {
+      return '';
+    }
+
+    return window.location.hostname;
+  } catch (error) {
+    return '';
+  }
+}
