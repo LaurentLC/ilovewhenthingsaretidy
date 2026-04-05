@@ -91,6 +91,10 @@ button {
   cursor: pointer;
 }
 
+.button-icon {
+  margin-right: 8px;
+}
+
 .icon-button {
   display: flex;
   align-items: center;

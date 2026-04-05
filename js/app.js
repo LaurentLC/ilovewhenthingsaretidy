@@ -13,12 +13,17 @@ const translations = {
     buttons: {
       sort: 'TIDY THIS UP!',
       copy: 'Copy result',
+      copyLink: 'Copy link to this tidy text',
       clear: 'Clear input'
     },
     messages: {
       nothingToCopy: 'Nothing to copy',
       copySuccess: 'Result copied to clipboard',
-      copyFailure: 'Copy failed in this browser, please try another one'
+      copyFailure: 'Copy failed in this browser, please try another one',
+      nothingToShare: 'Nothing to share',
+      copyLinkSuccess: 'Link copied to clipboard.',
+      copyLinkRandomNotice: ' Because random mode is selected, the result may be different when the link is opened.',
+      copyLinkFailure: 'Link copy failed in this browser, please try another one'
     },
     defaultText: 'One is not born a woman: one becomes one. No biological, psychological, or economic fate defines the figure that the human female presents within society; it is civilization as a whole that elaborates this intermediate product between the male and the castrate that is described as feminine. Only the mediation of others can constitute an individual as an Other.',
     languageLabel: 'Language preference'
@@ -35,12 +40,17 @@ const translations = {
     buttons: {
       sort: 'RANGE-MOI \u00C7A !',
       copy: 'Copier le r\u00E9sultat',
+      copyLink: 'Copier le lien vers ce texte bien rang\u00E9',
       clear: 'Effacer le champ'
     },
     messages: {
       nothingToCopy: 'Rien \u00E0 copier',
       copySuccess: 'R\u00E9sultat copi\u00E9 dans le presse-papiers',
-      copyFailure: 'Copie impossible avec ce navigateur, essayez-en un autre'
+      copyFailure: 'Copie impossible avec ce navigateur, essayez-en un autre',
+      nothingToShare: 'Rien \u00E0 partager',
+      copyLinkSuccess: 'Lien copi\u00E9 dans le presse-papiers.',
+      copyLinkRandomNotice: ' Comme le mode al\u00E9atoire est s\u00E9lectionn\u00E9, le r\u00E9sultat pourra \u00EAtre diff\u00E9rent \u00E0 l\u2019ouverture du lien.',
+      copyLinkFailure: 'Copie du lien impossible avec ce navigateur, essayez-en un autre'
     },
     defaultText: 'On ne na\u00EEt pas femme : on le devient. Aucun destin biologique, psychique, \u00E9conomique ne d\u00E9finit la figure que rev\u00EAt au sein de la soci\u00E9t\u00E9 la femelle humaine ; c\u2019est l\u2019ensemble de la civilisation qui \u00E9labore ce produit interm\u00E9diaire entre le m\u00E2le et le castrat qu\u2019on qualifie de f\u00E9minin. Seule la m\u00E9diation d\u2019autrui peut constituer un individu comme un Autre.',
     languageLabel: 'Choisir la langue'
@@ -49,12 +59,15 @@ const translations = {
 
 let currentLang = 'fr';
 let languageSelect;
+let shouldClearUrlOnNextManualSort = false;
 
 document.addEventListener('DOMContentLoaded', () => {
   languageSelect = document.getElementById('languageSelect');
-  currentLang = getInitialLanguage();
+  const initialState = getInitialStateFromUrl();
+  currentLang = initialState.lang;
 
   applyTranslations();
+  applyInitialState(initialState);
 
   languageSelect.addEventListener('change', event => {
     setLanguage(event.target.value);
@@ -63,37 +76,42 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('sortBtn').addEventListener('click', updateOutput);
   document.getElementById('clearBtn').addEventListener('click', clearInput);
   document.getElementById('copyBtn').addEventListener('click', copyOutput);
+  document.getElementById('copyLinkBtn').addEventListener('click', copyShareLink);
 });
 
-function getInitialLanguage() {
-  if (!window.location.search) {
-    return 'fr';
-  }
-
+function getInitialStateFromUrl() {
   const params = new URLSearchParams(window.location.search);
   const explicitLang = params.get('lang') || params.get('LANG');
+  let lang = 'fr';
 
   if (explicitLang) {
     const normalized = explicitLang.toLowerCase();
     if (normalized === 'fr') {
-      return 'fr';
+      lang = 'fr';
     }
     if (normalized === 'en') {
-      return 'en';
+      lang = 'en';
+    }
+  } else {
+    for (const key of params.keys()) {
+      const upperKey = key.toUpperCase();
+      if (upperKey === 'FR') {
+        lang = 'fr';
+        break;
+      }
+      if (upperKey === 'EN') {
+        lang = 'en';
+        break;
+      }
     }
   }
 
-  for (const key of params.keys()) {
-    const upperKey = key.toUpperCase();
-    if (upperKey === 'FR') {
-      return 'fr';
-    }
-    if (upperKey === 'EN') {
-      return 'en';
-    }
-  }
-
-  return 'fr';
+  return {
+    lang,
+    order: getSortOrderFromParams(params),
+    text: params.get('text') || '',
+    hasSharedText: params.has('text')
+  };
 }
 
 function applyTranslations() {
@@ -110,6 +128,7 @@ function applyTranslations() {
   document.getElementById('labelRandom').textContent = t.sortOptions.random;
   document.getElementById('sortBtn').textContent = t.buttons.sort;
   document.getElementById('copyBtn').textContent = t.buttons.copy;
+  document.getElementById('copyLinkBtnLabel').textContent = t.buttons.copyLink;
   document.getElementById('clearBtn').setAttribute('aria-label', t.buttons.clear);
   languageSelect.setAttribute('aria-label', t.languageLabel);
   languageSelect.value = currentLang;
@@ -129,6 +148,10 @@ function updateUrlForLang(lang) {
   url.searchParams.delete('LANG');
 
   window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
+}
+
+function clearShareUrlState() {
+  window.history.replaceState(null, '', `${window.location.pathname}${window.location.hash}`);
 }
 
 function setLanguage(lang) {
@@ -236,6 +259,16 @@ function tidyText(text, sortOrder) {
   );
 }
 
+function getSortOrderFromParams(params) {
+  const order = params.get('order');
+
+  if (order === 'asc' || order === 'desc' || order === 'random') {
+    return order;
+  }
+
+  return 'asc';
+}
+
 function getSelectedSortOrder() {
   const checked = document.querySelector('input[name="sortOrder"]:checked');
 
@@ -253,7 +286,41 @@ function getSelectedSortOrder() {
   return 'asc';
 }
 
-function updateOutput() {
+function setSelectedSortOrder(sortOrder) {
+  const validSortOrder = sortOrder === 'desc' || sortOrder === 'random' ? sortOrder : 'asc';
+  const radio = document.querySelector(`input[name="sortOrder"][value="${validSortOrder}"]`);
+
+  if (radio) {
+    radio.checked = true;
+  }
+}
+
+function buildShareUrl(text, sortOrder) {
+  const url = new URL(window.location.href);
+
+  url.search = '';
+  url.searchParams.set('lang', currentLang);
+  url.searchParams.set('order', sortOrder);
+  url.searchParams.set('text', text);
+
+  return url.toString();
+}
+
+function applyInitialState(initialState) {
+  setSelectedSortOrder(initialState.order);
+
+  if (!initialState.hasSharedText) {
+    return;
+  }
+
+  const inputElement = document.getElementById('input');
+  inputElement.value = initialState.text;
+  shouldClearUrlOnNextManualSort = true;
+  updateOutput({ isAutoLoad: true });
+}
+
+function updateOutput(options = {}) {
+  const { isAutoLoad = false } = options;
   const inputElement = document.getElementById('input');
   let input = inputElement.value;
 
@@ -268,6 +335,11 @@ function updateOutput() {
 
   document.getElementById('output').textContent = output;
   document.getElementById('status').textContent = '';
+
+  if (!isAutoLoad && shouldClearUrlOnNextManualSort) {
+    clearShareUrlState();
+    shouldClearUrlOnNextManualSort = false;
+  }
 }
 
 function clearInput() {
@@ -293,6 +365,28 @@ async function copyOutput() {
     status.textContent = messages.copySuccess;
   } catch (err) {
     status.textContent = messages.copyFailure;
+  }
+}
+
+async function copyShareLink() {
+  const input = document.getElementById('input').value;
+  const status = document.getElementById('status');
+  const messages = translations[currentLang].messages;
+
+  if (!input.trim()) {
+    status.textContent = messages.nothingToShare;
+    return;
+  }
+
+  const sortOrder = getSelectedSortOrder();
+  const shareUrl = buildShareUrl(input, sortOrder);
+
+  try {
+    await navigator.clipboard.writeText(shareUrl);
+    status.textContent = messages.copyLinkSuccess +
+      (sortOrder === 'random' ? messages.copyLinkRandomNotice : '');
+  } catch (err) {
+    status.textContent = messages.copyLinkFailure;
   }
 }
 
