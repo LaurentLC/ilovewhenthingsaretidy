@@ -119,9 +119,16 @@ function applyTranslations() {
 }
 
 function updateUrlForLang(lang) {
-  const newQuery = `?${lang.toUpperCase()}`;
-  const newUrl = `${window.location.pathname}${newQuery}${window.location.hash}`;
-  window.history.replaceState(null, '', newUrl);
+  const url = new URL(window.location.href);
+
+  url.searchParams.set('lang', lang);
+  url.searchParams.delete('FR');
+  url.searchParams.delete('EN');
+  url.searchParams.delete('fr');
+  url.searchParams.delete('en');
+  url.searchParams.delete('LANG');
+
+  window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
 }
 
 function setLanguage(lang) {

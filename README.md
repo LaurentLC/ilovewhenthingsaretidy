@@ -10,7 +10,7 @@ The app takes any pasted or typed text and transforms each word locally:
 
 Numbers are treated the same way, but only within number sequences. Punctuation, spaces, line breaks, and the original shape of the text stay in place, so the result still looks like the source text, just reorganized from the inside.
 
-The interface is available in French and English, with a language switcher and URL-based language state (`?FR` / `?EN`, or `?lang=fr` / `?lang=en`).
+The interface is available in French and English, with a language switcher and URL-based language state (`?lang=fr` / `?lang=en`).
 
 ## What the app does
 
@@ -116,7 +116,7 @@ L'application prend un texte saisi ou collé, puis transforme chaque mot localem
 
 Les nombres sont traités de la même manière, mais uniquement à l'intérieur des suites de chiffres. La ponctuation, les espaces, les retours à la ligne et la silhouette générale du texte restent en place : le texte garde donc sa forme, mais son intérieur est réordonné.
 
-L'interface existe en français et en anglais, avec un sélecteur de langue et un état conservé dans l'URL (`?FR` / `?EN`, ou `?lang=fr` / `?lang=en`).
+L'interface existe en français et en anglais, avec un sélecteur de langue et un état conservé dans l'URL (`?lang=fr` / `?lang=en`).
 
 ## Ce que fait l'application
 
