@@ -63,6 +63,7 @@ let shouldClearUrlOnNextManualSort = false;
 
 document.addEventListener('DOMContentLoaded', () => {
   languageSelect = document.getElementById('languageSelect');
+  const inputElement = document.getElementById('input');
   const initialState = getInitialStateFromUrl();
   currentLang = initialState.lang;
 
@@ -73,10 +74,11 @@ document.addEventListener('DOMContentLoaded', () => {
     setLanguage(event.target.value);
   });
 
-  document.getElementById('sortBtn').addEventListener('click', updateOutput);
+  document.getElementById('sortBtn').addEventListener('click', handleSortAction);
   document.getElementById('clearBtn').addEventListener('click', clearInput);
   document.getElementById('copyBtn').addEventListener('click', copyOutput);
   document.getElementById('copyLinkBtn').addEventListener('click', copyShareLink);
+  inputElement.addEventListener('keydown', handleInputKeydown);
 });
 
 function getInitialStateFromUrl() {
@@ -340,6 +342,8 @@ function updateOutput(options = {}) {
     clearShareUrlState();
     shouldClearUrlOnNextManualSort = false;
   }
+
+  return output;
 }
 
 function clearInput() {
@@ -366,6 +370,20 @@ async function copyOutput() {
   } catch (err) {
     status.textContent = messages.copyFailure;
   }
+}
+
+async function handleSortAction() {
+  updateOutput();
+  await copyOutput();
+}
+
+function handleInputKeydown(event) {
+  if (event.key !== 'Enter' || !event.altKey) {
+    return;
+  }
+
+  event.preventDefault();
+  handleSortAction();
 }
 
 async function copyShareLink() {
