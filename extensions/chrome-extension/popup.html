@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I love when things are tidy</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <main class="popup">
+    <h1>I love when things are tidy</h1>
+    <p class="intro">Rewrite the visible text of the current page without changing its layout.</p>
+
+    <div class="state-panel" aria-live="polite">
+      <p class="state-line">
+        <span class="state-label">Site</span>
+        <strong id="siteValue">Checking...</strong>
+      </p>
+      <p class="state-line">
+        <span class="state-label">Page state</span>
+        <strong id="pageStateValue">Checking...</strong>
+      </p>
+      <p class="state-line">
+        <span class="state-label">Active mode</span>
+        <strong id="activeModeValue">A-Z</strong>
+      </p>
+    </div>
+
+    <label class="auto-apply-toggle">
+      <input id="autoApplyCheckbox" type="checkbox" />
+      <span>Auto-apply on this site</span>
+    </label>
+
+    <fieldset class="mode-group">
+      <legend>Mode</legend>
+
+      <label class="mode-option">
+        <input type="radio" name="mode" value="asc" checked />
+        <span>A-Z</span>
+      </label>
+
+      <label class="mode-option">
+        <input type="radio" name="mode" value="desc" />
+        <span>Z-A</span>
+      </label>
+
+      <label class="mode-option">
+        <input type="radio" name="mode" value="random" />
+        <span>Random</span>
+      </label>
+    </fieldset>
+
+    <div class="actions">
+      <button id="applyBtn" type="button">Apply to this tab</button>
+      <button id="restoreBtn" type="button" class="secondary">Restore</button>
+    </div>
+
+    <p id="status" class="status" aria-live="polite">Choose a mode, then apply it to the current tab.</p>
+  </main>
+
+  <script src="popup.js"></script>
+</body>
+</html>
