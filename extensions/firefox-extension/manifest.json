@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "I love when things are tidy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Rewrites visible page text by sorting or shuffling letters inside words.",
   "browser_specific_settings": {
     "gecko": {
